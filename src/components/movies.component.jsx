@@ -9,17 +9,18 @@ class Movies extends Component {
         genres: [{ name: 'All Genres' }, ...getGenres()],
         selectedGenre: 'All Genres',
         activePage: 1,
-        dataCount:10,
-        currentItems:[],
+        dataCount: 10,
+        currentItems: [],
+        sortColumn: { path: 'title', order: 'asc' }
 
     }
     setActivePage = (page) => {
-        this.setState({activePage: page});
-     }
+        this.setState({ activePage: page });
+    }
     paginateMovies = (movies) => {
         const { activePage, dataCount } = this.state;
-        const start = (activePage-1)*dataCount;
-        const updatedMovies = movies.slice(start, start+dataCount);
+        const start = (activePage - 1) * dataCount;
+        const updatedMovies = movies.slice(start, start + dataCount);
         return updatedMovies;
     }
 
@@ -34,14 +35,15 @@ class Movies extends Component {
         return filteredMovies;
     }
     handleClickGenre = (name) => {
-        this.setState({ selectedGenre: name , activePage: 1});
+        this.setState({ selectedGenre: name, activePage: 1 });
 
     }
-    handleSort =(path) =>{
-
+    handleSort = (sortColumn) => {
+        this.setState({ ...this.state, sortColumn });
     }
     render() {
         const filtered = this.filterMovies();
+      //  const sort = this.handleSort();
         const movies = this.paginateMovies(filtered);
         return (
             <>
@@ -60,12 +62,12 @@ class Movies extends Component {
                             movies={movies}
                             onSort={this.handleSort}
                         />
-                        <Pagination 
-                        totalItems={filtered.length}
-                        pageCount={this.state.dataCount}
-                        activePage={this.state.activePage}
-                        setActivePage={this.setActivePage}
-                    />  
+                        <Pagination
+                            totalItems={filtered.length}
+                            pageCount={this.state.dataCount}
+                            activePage={this.state.activePage}
+                            setActivePage={this.setActivePage}
+                        />
                     </div>
                 </div>
             </>

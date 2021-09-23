@@ -1,5 +1,8 @@
 import React from 'react';
 const TableBody = ({ columns, items, onSort }) => {
+    const handleSort=(path)=>{
+        onSort({path: path, order:'asc'});
+    }
     return (
         <>
             <tbody>
@@ -8,7 +11,7 @@ const TableBody = ({ columns, items, onSort }) => {
                         return( 
                         <tr>
                             {
-                            columns.map(column => <td onClick={()=>onSort(column.path)}>{column.content(item)}</td>)
+                            columns.map(column => <td onClick={()=>handleSort(column.path)}>{column.content(item)}</td>)
                             }
                         </tr>
                         )
